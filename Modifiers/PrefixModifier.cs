@@ -20,21 +20,33 @@ namespace UpdateApp
             var name = string.Empty;
             part.GetReportProperty("NAME", ref name);
 
-            if (name == "HILTI")
+            if (name.Contains("HILTI"))
             {
-                excutionForm.SectionLabelUpdate($"The Part Is Hilti Anchor", color);
+                excutionForm.PrefixLabelUpdate($"The Part Is Hilti Anchor", color);
                 return;
             }
 
-            if (name == "HALFEN")
+            if (name.Contains("HALFEN"))
             {
-                excutionForm.SectionLabelUpdate($"The Part Is Halfen Bolt", color);
+                excutionForm.PrefixLabelUpdate($"The Part Is Halfen Bolt", color);
                 return;
             }
 
-            if (name == "SHOULDER BOLT")
+            if (name.Contains("SHOULDER BOLT"))
             {
-                excutionForm.SectionLabelUpdate($"The Part Is ShoulderBolt", color);
+                excutionForm.PrefixLabelUpdate($"The Part Is ShoulderBolt", color);
+                return;
+            }
+
+            if (name.Contains("STUD"))
+            {
+                excutionForm.PrefixLabelUpdate($"The Part Is Stud", color);
+                return;
+            }
+
+            if (name.Contains("REINFORCEMENT"))
+            {
+                excutionForm.PrefixLabelUpdate($"The Part Is Reinforcement Bar", color);
                 return;
             }
 
