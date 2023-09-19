@@ -8,22 +8,6 @@ namespace UpdateApp
     {
         internal static void Update(Part part, ExecutionForm excutionForm, Color color)
         {
-            var materialType = string.Empty;
-            part.GetReportProperty("MATERIAL_TYPE", ref materialType);
-            if (materialType != "STEEL")
-            {
-                excutionForm.SectionLabelUpdate($"The Part Is Not Steel", color);
-                return;
-            }
-
-            var name = string.Empty;
-            part.GetReportProperty("NAME", ref name);
-            if (name == "HILTI")
-            {
-                excutionForm.SectionLabelUpdate($"The Part Is Hilti Anchor", color);
-                return;
-            }
-
             var section = part.Profile.ProfileString;
 
             var profileType = string.Empty;

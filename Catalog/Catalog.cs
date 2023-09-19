@@ -25,6 +25,42 @@ namespace UpdateApp
                     continue;
                 }
 
+                var materialType = string.Empty;
+                part.GetReportProperty("MATERIAL_TYPE", ref materialType);
+
+                if (materialType != "STEEL")
+                {
+                    continue;
+                }
+
+                var name = string.Empty;
+                part.GetReportProperty("NAME", ref name);
+
+                if (name.Contains("HILTI"))
+                {
+                    continue;
+                }
+
+                if (name.Contains("HALFEN"))
+                {
+                    continue;
+                }
+
+                if (name.Contains("SHOULDER BOLT"))
+                {
+                    continue;
+                }
+
+                if (name.Contains("STUD"))
+                {
+                    continue;
+                }
+
+                if (name.Contains("REINFORCEMENT"))
+                {
+                    continue;
+                }
+
                 Parts.Add(part);
             }
 
