@@ -25,10 +25,10 @@ namespace UpdateApp
 
             foreach (var part in Catalog.Parts)
             {
-                ClassModifier.Update(part, excutionForm, Color.Firebrick);
-                PhaseModifier.Update(part, excutionForm, Color.DarkMagenta);
-                PrefixModifier.Update(part, excutionForm, Color.DarkGreen);
-                SectionModifier.Update(part, excutionForm, Color.DodgerBlue);
+                ClassModifier.Modify(part, excutionForm, Color.Firebrick);
+                PhaseModifier.Modify(part, excutionForm, Color.DarkMagenta);
+                PrefixModifier.Modify(part, excutionForm, Color.DarkGreen);
+                SectionModifier.Modify(part, excutionForm, Color.DodgerBlue);
             }
 
             model.CommitChanges();

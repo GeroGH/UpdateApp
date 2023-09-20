@@ -6,12 +6,10 @@ namespace UpdateApp
 {
     class PrefixModifier
     {
-        internal static void Update(Part part, ExecutionForm excutionForm, Color color)
+        internal static void Modify(Part part, ExecutionForm excutionForm, Color color)
         {
             part.GetAssembly().GetMainPart().GetPhase(out var mainPartPhase);
-            part.SetPhase(mainPartPhase);
             var prefix = mainPartPhase.PhaseComment;
-
             var startPos = prefix.IndexOf("[");
             var endPos = prefix.IndexOf("]");
 
@@ -23,19 +21,15 @@ namespace UpdateApp
 
             prefix = prefix.Substring(startPos + 1, endPos - startPos - 1);
 
-            if (part.Name.ToUpper().Contains("PREP") || part.Name.ToUpper().Contains("BEARING") || part.Name.ToUpper().Contains("MACHINED"))
-            {
-                prefix = $"{prefix}#";
-                excutionForm.PrefixLabelUpdate($"Part Prefix <<< {prefix}# >>> Updated ", color);
-            }
-
             var profileType = string.Empty;
             part.GetReportProperty("PROFILE_TYPE", ref profileType);
 
             if (profileType == "B")
             {
-                part.PartNumber.Prefix = prefix;
-                excutionForm.PrefixLabelUpdate($"Part Prefix <<< {prefix} >>> Updated ", color);
+                if (part.Equals(part.GetAssembly().GetMainPart()))
+                {
+                    prefix = $"{prefix}M";
+                }
             }
 
             if (profileType != "B")
@@ -46,24 +40,29 @@ namespace UpdateApp
 
                 if (length > 2000)
                 {
-                    part.PartNumber.Prefix = $"{prefix}P";
-                    excutionForm.PrefixLabelUpdate($"Part Prefix <<< {prefix}P >>> Updated ", color);
+                    prefix = $"{prefix}P";
                 }
 
                 if (length <= 2000)
                 {
-                    part.PartNumber.Prefix = $"{prefix}S";
-                    excutionForm.PrefixLabelUpdate($"Part Prefix <<< {prefix}S >>> Updated ", color);
+                    prefix = $"{prefix}S";
+                }
+
+                if (part.Equals(part.GetAssembly().GetMainPart()))
+                {
+                    prefix = $"{prefix}M";
                 }
             }
 
-            if (part.Equals(part.GetAssembly().GetMainPart()))
+            if (part.Name.ToUpper().Contains("PREP") || part.Name.ToUpper().Contains("BEARING") || part.Name.ToUpper().Contains("MACHINED"))
             {
-                part.PartNumber.Prefix = $"{prefix}M";
-                excutionForm.PrefixLabelUpdate($"Part Prefix <<< {prefix}M >>> Updated ", color);
+                prefix = $"{prefix}#";
             }
 
+            part.PartNumber.Prefix = prefix;
             part.Modify();
+
+            excutionForm.PrefixLabelUpdate($"Part Prefix <<< {prefix} >>> Updated ", color);
         }
     }
 }

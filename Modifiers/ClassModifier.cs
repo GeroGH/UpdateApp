@@ -5,14 +5,15 @@ namespace UpdateApp
 {
     class ClassModifier
     {
-        internal static void Update(Part part, ExecutionForm excutionForm, Color color)
+        internal static void Modify(Part part, ExecutionForm excutionForm, Color color)
         {
             var ass = part.GetAssembly();
             var mainPart = ass.GetMainPart() as Part;
 
             part.Class = mainPart.Class;
-            excutionForm.ClassLabelUpdate($"Part Class No. <<< {part.Class} >>> Updated ", color);
             part.Modify();
+
+            excutionForm.ClassLabelUpdate($"Part Class No. <<< {part.Class} >>> Updated ", color);
         }
     }
 }

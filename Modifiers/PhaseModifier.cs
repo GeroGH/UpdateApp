@@ -5,7 +5,7 @@ namespace UpdateApp
 {
     class PhaseModifier
     {
-        internal static void Update(Part part, ExecutionForm excutionForm, Color color)
+        internal static void Modify(Part part, ExecutionForm excutionForm, Color color)
         {
             part.GetAssembly().GetMainPart().GetPhase(out var mainPartPhase);
             part.SetPhase(mainPartPhase);
