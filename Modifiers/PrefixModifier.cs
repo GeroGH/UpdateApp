@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using Tekla.Structures.Model;
 
 namespace UpdateApp
@@ -34,18 +33,10 @@ namespace UpdateApp
 
             if (profileType != "B")
             {
-                var length = 0.0;
-                part.GetReportProperty("LENGTH", ref length);
-                length = Math.Round(length);
 
-                if (length > 2000)
+                if (!part.Equals(part.GetAssembly().GetMainPart()))
                 {
                     prefix = $"{prefix}P";
-                }
-
-                if (length <= 2000)
-                {
-                    prefix = $"{prefix}S";
                 }
 
                 if (part.Equals(part.GetAssembly().GetMainPart()))

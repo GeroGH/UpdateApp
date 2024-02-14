@@ -46,17 +46,12 @@ namespace UpdateApp
                     continue;
                 }
 
-                if (name.Contains("SHOULDER BOLT"))
+                if (name.Contains("SHOULDER") || name.Contains("BOLT"))
                 {
                     continue;
                 }
 
-                if (name.Contains("STUD"))
-                {
-                    continue;
-                }
-
-                if (name.Contains("REINFORCEMENT"))
+                if (name.Contains("SHEAR") || name.Contains("STUD"))
                 {
                     continue;
                 }
