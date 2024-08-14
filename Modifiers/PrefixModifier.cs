@@ -5,12 +5,13 @@ namespace UpdateApp
 {
     class PrefixModifier
     {
+
         internal static void Modify(Part part, ExecutionForm excutionForm, Color color)
         {
             part.GetAssembly().GetMainPart().GetPhase(out var mainPartPhase);
-            var prefix = mainPartPhase.PhaseComment;
-            var startPos = prefix.IndexOf("[");
-            var endPos = prefix.IndexOf("]");
+            var phaseComment = mainPartPhase.PhaseComment;
+            var startPos = phaseComment.IndexOf("[");
+            var endPos = phaseComment.IndexOf("]");
 
             if (startPos == -1 || endPos == -1)
             {
@@ -18,34 +19,46 @@ namespace UpdateApp
                 return;
             }
 
-            prefix = prefix.Substring(startPos + 1, endPos - startPos - 1);
+            var prefix = phaseComment.Substring(startPos + 1, endPos - startPos - 1);
 
             var profileType = string.Empty;
             part.GetReportProperty("PROFILE_TYPE", ref profileType);
 
-            if (profileType == "B")
-            {
-                if (part.Equals(part.GetAssembly().GetMainPart()))
-                {
-                    prefix = $"{prefix}M";
-                }
-            }
+            var IsProfile = false;
+            var IsPrimaryPart = false;
+            var IsMachined = false;
 
             if (profileType != "B")
             {
+                IsProfile = true;
+            }
 
-                if (!part.Equals(part.GetAssembly().GetMainPart()))
-                {
-                    prefix = $"{prefix}P";
-                }
+            if (part.Equals(part.GetAssembly().GetMainPart()))
+            {
+                IsPrimaryPart = true;
+            }
 
-                if (part.Equals(part.GetAssembly().GetMainPart()))
+            if (part.Name.ToUpper().Contains("PREP") ||
+                part.Name.ToUpper().Contains("BEARING") ||
+                part.Name.ToUpper().Contains("MACHINED"))
+            {
+                IsMachined = true;
+            }
+
+            if (IsPrimaryPart)
+            {
+                prefix = $"PP{prefix.Remove(0, 1)}";
+            }
+
+            if (!IsPrimaryPart)
+            {
+                if (IsProfile)
                 {
-                    prefix = $"{prefix}M";
+                    prefix = $"P{prefix.Remove(0, 1)}";
                 }
             }
 
-            if (part.Name.ToUpper().Contains("PREP") || part.Name.ToUpper().Contains("BEARING") || part.Name.ToUpper().Contains("MACHINED"))
+            if (IsMachined)
             {
                 prefix = $"{prefix}#";
             }
