@@ -36,6 +36,8 @@ namespace UpdateApp
                 var name = string.Empty;
                 part.GetReportProperty("NAME", ref name);
 
+                name = name.ToUpper();
+
                 if (name.Contains("HILTI"))
                 {
                     continue;
@@ -46,12 +48,17 @@ namespace UpdateApp
                     continue;
                 }
 
-                if (name.Contains("SHOULDER") || name.Contains("BOLT"))
+                if (name.Contains("SHOULDER") && name.Contains("BOLT"))
                 {
                     continue;
                 }
 
-                if (name.Contains("SHEAR") || name.Contains("STUD"))
+                if (name.Contains("HD") && name.Contains("BOLT"))
+                {
+                    continue;
+                }
+
+                if (name.Contains("SHEAR") && name.Contains("STUD"))
                 {
                     continue;
                 }
