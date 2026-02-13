@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
-using Tekla.Structures.Model.Operations;
 
 namespace UpdateApp
 {
@@ -9,52 +8,35 @@ namespace UpdateApp
         public ExecutionForm()
         {
             this.InitializeComponent();
+            this.PrepareUiForExecution();
         }
 
-        public void UpdateCentralLabel(string str, Color color)
+        private void PrepareUiForExecution()
         {
-            this.ClassLabel.Hide();
-            this.SectionLabel.Hide();
-            this.PrefixLabel.Hide();
-
-            this.PhaseLabel.Text = str + " ...";
-            this.PhaseLabel.ForeColor = color;
-            this.PhaseLabel.Update();
-
-            Operation.DisplayPrompt(str + " ...");
+            this.SectionLabel.Text = string.Empty;
+            this.PhaseLabel.Text = string.Empty;
+            this.PrefixLabel.Text = string.Empty;
         }
 
-
-        public void ClassLabelUpdate(string str, Color color)
+        private void UpdateLabel(Label label, string text, Color color)
         {
-            this.ClassLabel.Show();
-            this.ClassLabel.Text = str + " ...";
-            this.ClassLabel.ForeColor = color;
-            this.ClassLabel.Update();
+            label.Text = $"{text} ...";
+            label.ForeColor = color;
+            label.Refresh();
         }
 
         public void PhaseLabelUpdate(string str, Color color)
         {
-            this.PhaseLabel.Show();
-            this.PhaseLabel.Text = str + " ...";
-            this.PhaseLabel.ForeColor = color;
-            this.PhaseLabel.Update();
-        }
-
-        public void SectionLabelUpdate(string str, Color color)
-        {
-            this.SectionLabel.Show();
-            this.SectionLabel.Text = str + " ...";
-            this.SectionLabel.ForeColor = color;
-            this.SectionLabel.Update();
+            this.UpdateLabel(this.PhaseLabel, str, color);
         }
 
         public void PrefixLabelUpdate(string str, Color color)
         {
-            this.PrefixLabel.Show();
-            this.PrefixLabel.Text = str + " ...";
-            this.PrefixLabel.ForeColor = color;
-            this.PrefixLabel.Update();
+            this.UpdateLabel(this.PrefixLabel, str, color);
+        }
+        public void SectionLabelUpdate(string str, Color color)
+        {
+            this.UpdateLabel(this.SectionLabel, str, color);
         }
     }
 }

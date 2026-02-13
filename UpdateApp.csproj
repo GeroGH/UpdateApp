@@ -69,6 +69,7 @@
     <Compile Include="Modifiers\PhaseModifier.cs" />
     <Compile Include="Modifiers\PrefixModifier.cs" />
     <Compile Include="Modifiers\SectionModifier.cs" />
+    <Compile Include="Modifiers\NameModifier.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ExcutionForm.resx">

@@ -22,7 +22,7 @@ namespace UpdateApp
 
             part.SetUserProperty("SectionSize", section);
 
-            excutionForm.SectionLabelUpdate($"Part Section <<< {section} >>> Updated ", color);
+            excutionForm.SectionLabelUpdate($"Part Section <<<[{section}]>>> Updated ", color);
         }
     }
 }

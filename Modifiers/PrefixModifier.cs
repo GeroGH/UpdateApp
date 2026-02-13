@@ -5,7 +5,6 @@ namespace UpdateApp
 {
     class PrefixModifier
     {
-
         internal static void Modify(Part part, ExecutionForm excutionForm, Color color)
         {
             part.GetAssembly().GetMainPart().GetPhase(out var mainPartPhase);
@@ -63,10 +62,52 @@ namespace UpdateApp
                 prefix = $"{prefix}#";
             }
 
+            var assembly = part.GetAssembly();
+            if (assembly == null)
+                return;
+
+            var mainPart = assembly.GetMainPart() as Part;
+            if (mainPart == null)
+                return;
+            var assemblyPrefix = mainPart.AssemblyNumber.Prefix;
+            part.AssemblyNumber.Prefix = assemblyPrefix;
             part.PartNumber.Prefix = prefix;
             part.Modify();
 
-            excutionForm.PrefixLabelUpdate($"Part Prefix <<< {prefix} >>> Updated ", color);
+            excutionForm.PrefixLabelUpdate($"Part and Assembly Prefix <<<[{prefix}] and [{assemblyPrefix}] >>> Updated ", color);
+
+            //part.GetAssembly().GetMainPart().GetPhase(out var mainPartPhase);
+            //var phaseNumber = mainPartPhase.PhaseNumber;
+            //var fittingAlocation = "X";
+            //var prefix = string.Empty;
+
+            //var profileType = string.Empty;
+            //part.GetReportProperty("PROFILE_TYPE", ref profileType);
+
+            //var IsProfile = false;
+            //var IsPrimaryPart = false;
+
+            //if (profileType != "B") { IsProfile = true; }
+
+            //if (part.Equals(part.GetAssembly().GetMainPart())) { IsPrimaryPart = true; }
+
+            //prefix = $"{fittingAlocation}{phaseNumber}F";
+
+            //if (IsPrimaryPart)
+            //{
+            //    prefix = $"{fittingAlocation}{phaseNumber}M";
+            //}
+
+            //if (!IsPrimaryPart)
+            //{
+            //    if (IsProfile)
+            //    {
+            //        prefix = $"{fittingAlocation}{phaseNumber}P";
+            //    }
+            //}
+
+            //part.PartNumber.Prefix = prefix;
+            //part.Modify();
         }
     }
 }

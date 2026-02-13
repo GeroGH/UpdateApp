@@ -12,8 +12,6 @@ namespace UpdateApp
 
             part.Class = mainPart.Class;
             part.Modify();
-
-            excutionForm.ClassLabelUpdate($"Part Class No. <<< {part.Class} >>> Updated ", color);
         }
     }
 }
