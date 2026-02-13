@@ -20,7 +20,7 @@ namespace UpdateApp
 
         private void UpdateLabel(Label label, string text, Color color)
         {
-            label.Text = $"{text} ...";
+            label.Text = text;
             label.ForeColor = color;
             label.Refresh();
         }

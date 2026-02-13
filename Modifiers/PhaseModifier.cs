@@ -29,7 +29,7 @@ namespace UpdateApp
                 bolts.Current.SetPhase(boltPartPhase);
             }
 
-            excutionForm.PhaseLabelUpdate($"Part Phase <<< {mainPartPhase.PhaseNumber} >>> Updated ", color);
+            excutionForm.PhaseLabelUpdate($"Part Phase <<< {mainPartPhase.PhaseNumber} >>> Updated ...", color);
         }
     }
 }

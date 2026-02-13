@@ -74,7 +74,7 @@ namespace UpdateApp
             part.PartNumber.Prefix = prefix;
             part.Modify();
 
-            excutionForm.PrefixLabelUpdate($"Part and Assembly Prefix <<<[{prefix}] and [{assemblyPrefix}] >>> Updated ", color);
+            excutionForm.PrefixLabelUpdate($"Part and Assembly Prefix <<<[{prefix}] and [{assemblyPrefix}] >>> Updated ...", color);
 
             //part.GetAssembly().GetMainPart().GetPhase(out var mainPartPhase);
             //var phaseNumber = mainPartPhase.PhaseNumber;

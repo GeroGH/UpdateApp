@@ -55,15 +55,15 @@
             this.PrefixLabel.Text = "Prefix Update";
             this.PrefixLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // SecionLabel
+            // SectionLabel
             // 
             this.SectionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SectionLabel.ForeColor = System.Drawing.Color.DarkCyan;
             this.SectionLabel.Location = new System.Drawing.Point(12, 76);
-            this.SectionLabel.Name = "SecionLabel";
+            this.SectionLabel.Name = "SectionLabel";
             this.SectionLabel.Size = new System.Drawing.Size(473, 33);
             this.SectionLabel.TabIndex = 4;
-            this.SectionLabel.Text = "Secion Update";
+            this.SectionLabel.Text = "Section Update";
             this.SectionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // ExecutionForm
