@@ -22,8 +22,6 @@ namespace UpdateApp
 
             part.Name = name;
             part.SetUserProperty("comment", comment);
-
-            part.Modify();
         }
     }
 }

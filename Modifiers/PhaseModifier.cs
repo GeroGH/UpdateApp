@@ -1,11 +1,10 @@
-﻿using System.Drawing;
-using Tekla.Structures.Model;
+﻿using Tekla.Structures.Model;
 
 namespace UpdateApp
 {
     class PhaseModifier
     {
-        internal static void Modify(Part part, ExecutionForm excutionForm, Color color)
+        internal static void Modify(Part part)
         {
             part.GetAssembly().GetMainPart().GetPhase(out var mainPartPhase);
             part.SetPhase(mainPartPhase);
@@ -28,8 +27,6 @@ namespace UpdateApp
                 boltGroup.PartToBeBolted.GetPhase(out var boltPartPhase);
                 bolts.Current.SetPhase(boltPartPhase);
             }
-
-            excutionForm.PhaseLabelUpdate($"Part Phase <<< {mainPartPhase.PhaseNumber} >>> Updated ...", color);
         }
     }
 }

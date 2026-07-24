@@ -59,22 +59,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Catalog\Catalog.cs" />
-    <Compile Include="ExcutionForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ExcutionForm.Designer.cs">
-      <DependentUpon>ExcutionForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Modifiers\ClassModifier.cs" />
+    <Compile Include="Modifiers\NumberignSeriesModifierProposal.cs" />
     <Compile Include="Modifiers\PhaseModifier.cs" />
-    <Compile Include="Modifiers\PrefixModifier.cs" />
+    <Compile Include="Modifiers\NumberignSeriesModifier.cs" />
     <Compile Include="Modifiers\SectionModifier.cs" />
     <Compile Include="Modifiers\NameModifier.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ExcutionForm.resx">
-      <DependentUpon>ExcutionForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

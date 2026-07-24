@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Drawing;
 using Tekla.Structures.Model;
 
 namespace UpdateApp
 {
     class SectionModifier
     {
-        internal static void Modify(Part part, ExecutionForm excutionForm, Color color)
+        internal static void Modify(Part part)
         {
             var section = part.Profile.ProfileString;
 
@@ -21,8 +20,6 @@ namespace UpdateApp
             }
 
             part.SetUserProperty("SectionSize", section);
-
-            excutionForm.SectionLabelUpdate($"Part Section <<<[{section}]>>> Updated ...", color);
         }
     }
 }

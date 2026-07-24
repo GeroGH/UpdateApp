@@ -1,17 +1,15 @@
-﻿using System.Drawing;
-using Tekla.Structures.Model;
+﻿using Tekla.Structures.Model;
 
 namespace UpdateApp
 {
     class ClassModifier
     {
-        internal static void Modify(Part part, ExecutionForm excutionForm, Color color)
+        internal static void Modify(Part part)
         {
             var ass = part.GetAssembly();
             var mainPart = ass.GetMainPart() as Part;
 
             part.Class = mainPart.Class;
-            part.Modify();
         }
     }
 }
