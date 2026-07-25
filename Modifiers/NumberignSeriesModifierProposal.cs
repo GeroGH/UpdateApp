@@ -4,9 +4,17 @@ namespace UpdateApp
 {
     class NumberingSeriesModifierProposal
     {
+        private const string ProjectPrefix = "U";
+        private const string ProfilePrefix = "P";
+        private const string FittingPrefix = "F";
+
         public static void Modify(Part part, string type)
         {
+
             if (part == null)
+                return;
+
+            if (string.IsNullOrWhiteSpace(type))
                 return;
 
             var assembly = part.GetAssembly();
@@ -16,53 +24,37 @@ namespace UpdateApp
             var mainPart = assembly.GetMainPart() as Part;
             if (mainPart == null)
                 return;
-
+                        
             mainPart.GetPhase(out var phase);
-
-            var project = "R";
-
             var phaseNumber = phase.PhaseNumber;
-
-            var IsProfile = false;
-            var IsPrimaryPart = false;
 
             var profileType = string.Empty;
             part.GetReportProperty("PROFILE_TYPE", ref profileType);
 
-            if (profileType != "B")
+            var isPrimaryPart = part.Equals(mainPart);
+            var isProfile = profileType != "B";
+
+            var assemblyPrefix = $"{ProjectPrefix}{phaseNumber}-{type}-";
+
+            if (isPrimaryPart)
             {
-                IsProfile = true;
+                ApplyNumberingSeries(part, assemblyPrefix, assemblyPrefix);
+                return;
             }
 
-            if (part.Equals(part.GetAssembly().GetMainPart()))
+            if (isProfile)
             {
-                IsPrimaryPart = true;
-            }
-            var assemblyPrefix = string.Empty;
-            var partPrefix = string.Empty;
-
-            if (IsProfile)
-            {
-                partPrefix = $"{project}{phaseNumber}-{"P"}-";
+                ApplyNumberingSeries(part, $"{ProjectPrefix}{phaseNumber}-{ProfilePrefix}-", assemblyPrefix);
+                return;
             }
 
-            if (!IsProfile)
-            {
-                partPrefix = $"{project}{phaseNumber}-{"F"}-";
-            }
+            ApplyNumberingSeries(part, $"{ProjectPrefix}{phaseNumber}-{FittingPrefix}-", assemblyPrefix);
+        }
 
-            if (IsPrimaryPart)
-            {
-                partPrefix = $"{project}{phaseNumber}-{type}-";
-                assemblyPrefix = $"{project}{phaseNumber}-{type}-";
-            }
-
+        private static void ApplyNumberingSeries(Part part, string partPrefix, string assemblyPrefix)
+        {
             part.PartNumber.Prefix = partPrefix;
-            part.PartNumber.StartNumber = 1;
-
             part.AssemblyNumber.Prefix = assemblyPrefix;
-            part.AssemblyNumber.StartNumber = 1;
-
             part.Modify();
         }
     }
