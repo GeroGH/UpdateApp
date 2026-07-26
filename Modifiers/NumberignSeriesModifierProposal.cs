@@ -4,13 +4,11 @@ namespace UpdateApp
 {
     class NumberingSeriesModifierProposal
     {
-        private const string ProjectPrefix = "U";
         private const string ProfilePrefix = "P";
         private const string FittingPrefix = "F";
 
-        public static void Modify(Part part, string type)
+        public static void Modify(Part part, string projectPrefix,string type)
         {
-
             if (part == null)
                 return;
 
@@ -34,7 +32,7 @@ namespace UpdateApp
             var isPrimaryPart = part.Equals(mainPart);
             var isProfile = profileType != "B";
 
-            var assemblyPrefix = $"{ProjectPrefix}{phaseNumber}-{type}-";
+            var assemblyPrefix = $"{projectPrefix}{phaseNumber}-{type}-";
 
             if (isPrimaryPart)
             {
@@ -44,11 +42,11 @@ namespace UpdateApp
 
             if (isProfile)
             {
-                ApplyNumberingSeries(part, $"{ProjectPrefix}{phaseNumber}-{ProfilePrefix}-", assemblyPrefix);
+                ApplyNumberingSeries(part, $"{projectPrefix}{phaseNumber}-{ProfilePrefix}-", assemblyPrefix);
                 return;
             }
 
-            ApplyNumberingSeries(part, $"{ProjectPrefix}{phaseNumber}-{FittingPrefix}-", assemblyPrefix);
+            ApplyNumberingSeries(part, $"{projectPrefix}{phaseNumber}-{FittingPrefix}-", assemblyPrefix);
         }
 
         private static void ApplyNumberingSeries(Part part, string partPrefix, string assemblyPrefix)

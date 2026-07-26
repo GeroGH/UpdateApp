@@ -1,4 +1,6 @@
 ﻿using System;
+using Microsoft.VisualBasic;
+using System.Windows.Forms;
 using Tekla.Structures.Model;
 using Tekla.Structures.Model.Operations;
 
@@ -6,24 +8,54 @@ namespace UpdateApp
 {
     static class Program
     {
+        private const string ProjectPrefix = "U";
+
         [STAThread]
         static void Main()
         {
             var model = new Model();
             Catalog.CollectPartsFromTheModel();
 
+            var useProposal = DialogResult.No;
+
+            useProposal = MessageBox.Show(
+                "Would you like to use the proposed numbering convention?",
+                "Numbering Convention",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            var type = string.Empty;
+
+            if (useProposal == DialogResult.Yes)
+            {
+                type = Microsoft.VisualBasic.Interaction.InputBox("Enter the assembly type (e.g. B, C, B2, BA, BA2)","Assembly Type","B");
+
+                if (string.IsNullOrWhiteSpace(type))
+                    return;
+            }
+
             foreach (var part in Catalog.Parts)
             {
                 try
                 {
                     PhaseModifier.Modify(part);
-                    NumberignSeriesModifier.Modify(part);
-                    //NumberingSeriesModifierProposal.Modify(part, "B");
+
+                    if (useProposal == DialogResult.Yes)
+                    {
+                        NumberingSeriesModifierProposal.Modify(part, ProjectPrefix, type);
+                    }
+                    else
+                    {
+                        NumberignSeriesModifier.Modify(part);
+                    }
+
                     SectionModifier.Modify(part);
+
                     part.Modify();
-                    Operation.DisplayPrompt($"Part prefixes {part.PartNumber.Prefix,-1}, {part.AssemblyNumber.Prefix,-1} updated ...");
+
+                    Operation.DisplayPrompt($"Part prefixes {part.PartNumber.Prefix}, {part.AssemblyNumber.Prefix} updated...");
                 }
-                catch (Exception)
+                catch
                 {
                     continue;
                 }
@@ -31,7 +63,8 @@ namespace UpdateApp
 
             model.CommitChanges();
             Catalog.SelectPartsInTheModel();
-            Operation.DisplayPrompt($"Update complete on total of {Catalog.Parts.Count} parts !");
+
+            Operation.DisplayPrompt($"Update complete on total of {Catalog.Parts.Count} parts!");
         }
     }
 }
