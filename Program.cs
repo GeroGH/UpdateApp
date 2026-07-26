@@ -44,7 +44,8 @@ namespace UpdateApp
                     {
                         NumberingSeriesModifierProposal.Modify(part, ProjectPrefix, type);
                     }
-                    else
+
+                    if (useProposal == DialogResult.No)
                     {
                         NumberignSeriesModifier.Modify(part);
                     }
