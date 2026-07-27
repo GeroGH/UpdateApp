@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.VisualBasic;
 using System.Windows.Forms;
 using Tekla.Structures.Model;
 using Tekla.Structures.Model.Operations;
@@ -26,14 +25,6 @@ namespace UpdateApp
 
             var type = string.Empty;
 
-            if (useProposal == DialogResult.Yes)
-            {
-                type = Microsoft.VisualBasic.Interaction.InputBox("Enter the assembly type (e.g. B, C, B2, BA, BA2)","Assembly Type","B");
-
-                if (string.IsNullOrWhiteSpace(type))
-                    return;
-            }
-
             foreach (var part in Catalog.Parts)
             {
                 try
@@ -42,6 +33,8 @@ namespace UpdateApp
 
                     if (useProposal == DialogResult.Yes)
                     {
+                        type = GetAssemblyType(part);
+
                         NumberingSeriesModifierProposal.Modify(part, ProjectPrefix, type);
                     }
 
@@ -66,6 +59,51 @@ namespace UpdateApp
             Catalog.SelectPartsInTheModel();
 
             Operation.DisplayPrompt($"Update complete on total of {Catalog.Parts.Count} parts!");
+        }
+        private static string GetAssemblyType(Part part)
+        {
+            var name = part.Name.ToUpper();
+
+            if (name.Contains("ANGLE"))
+                return "A";
+
+            if (name.Contains("BEAM"))
+                return "B";
+
+            if (name.Contains("BRACE"))
+                return "BR";
+
+            if (name.Contains("BRACKET"))
+                return "BK";
+
+            if (name.Contains("CHANNEL"))
+                return "CH";
+
+            if (name.Contains("COLUMN"))
+                return "C";
+
+            if (name.Contains("LOOSE"))
+                return "L";
+
+            if (name.Contains("PACK"))
+                return "PK";
+
+            if (name.Contains("PLATE"))
+                return "PL";
+
+            if (name.Contains("GIRDER"))
+                return "G";
+
+            if (name.Contains("RAFTER"))
+                return "R";
+
+            if (name.Contains("TRIMMER"))
+                return "T";
+
+            if (name.Contains("TRUSS"))
+                return "TR";
+
+            return "AD";
         }
     }
 }
