@@ -34,7 +34,6 @@ namespace UpdateApp
                     if (useProposal == DialogResult.Yes)
                     {
                         type = GetAssemblyType(part);
-
                         NumberingSeriesModifierProposal.Modify(part, ProjectPrefix, type);
                     }
 
