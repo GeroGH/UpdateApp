@@ -61,23 +61,38 @@ namespace UpdateApp
                 case string n when n.Contains("LOOSE") && n.Contains("PLATE"): return "LP";
                 case string n when n.Contains("SPLICE") && n.Contains("PLATE"): return "SP";
                 case string n when n.Contains("FINGER") && n.Contains("PACK"): return "FP";
+                case string n when n.Contains("SHOULDER") && n.Contains("BOLT"): return "SB";
+                case string n when n.Contains("GRATING") || n.Contains("GREATING"): return "GR";
+                case string n when n.Contains("SHIM"): return "SH";
+                case string n when n.Contains("HANGER"): return "HG";
 
                 // Assembly families
-                case string n when n.Contains("STAIR"): return "S";
-                case string n when n.Contains("FRAME"): return "F";
+                case string n when n.Contains("STAIR"): return "ST";
+                case string n when n.Contains("FRAME"): return "FR";
+
+                // Company specific members
+                case string n when n.Contains("FABRICATED") && n.Contains("BEAM"): return "FB";
+                case string n when n.Contains("CELLULAR") && n.Contains("BEAM"): return "CB";
+                case string n when n.Contains("STUDDED") && n.Contains("BEAM"): return "SB";
+
+                // Hollow sections
+                case string n when n.Contains("HOLLOW SECTION"): return "H";
+                case string n when n.Contains("SHS"): return "H";
+                case string n when n.Contains("RHS"): return "H";
+                case string n when n.Contains("CHS"): return "H";
 
                 // General structural types
+                case string n when n.Contains("COLUMN"): return "C";
+                case string n when n.Contains("POST"): return "N";
+                case string n when n.Contains("TRIMMER"): return "J";
                 case string n when n.Contains("BEAM"): return "B";
-                case string n when n.Contains("COLUMN") || n.Contains("POST"): return "C";
                 case string n when n.Contains("BRACE"): return "X";
                 case string n when n.Contains("TRUSS"): return "TR";
-                case string n when n.Contains("TRIMMER"): return "T";
                 case string n when n.Contains("RAFTER"): return "R";
                 case string n when n.Contains("GIRDER"): return "G";
                 case string n when n.Contains("CHANNEL"): return "U";
                 case string n when n.Contains("ANGLE"): return "E";
                 case string n when n.Contains("BRACKET"): return "A";
-                case string n when n.Contains("PLATE"): return "PLT";
 
                 default: return "Z";
             }
