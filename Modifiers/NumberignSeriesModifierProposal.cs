@@ -9,12 +9,8 @@ namespace UpdateApp
 
         public static void Modify(Part part, string projectPrefix)
         {
-            var type = GetAssemblyType(part);
 
             if (part == null)
-                return;
-
-            if (string.IsNullOrWhiteSpace(type))
                 return;
 
             var assembly = part.GetAssembly();
@@ -27,6 +23,11 @@ namespace UpdateApp
 
             mainPart.GetPhase(out var phase);
             var phaseNumber = phase.PhaseNumber;
+
+            var type = GetAssemblyType(mainPart);
+
+            if (string.IsNullOrWhiteSpace(type))
+                return;
 
             var profileType = string.Empty;
             part.GetReportProperty("PROFILE_TYPE", ref profileType);
@@ -51,10 +52,8 @@ namespace UpdateApp
             ApplyNumberingSeries(part, $"{projectPrefix}{phaseNumber}-{FittingPrefix}-", assemblyPrefix);
         }
 
-        private static string GetAssemblyType(Part part)
+        private static string GetAssemblyType(Part mainPart)
         {
-            var assembly = part.GetAssembly();
-            var mainPart = assembly.GetMainPart() as Part;
             var name = mainPart.Name.ToUpper();
 
             switch (name)

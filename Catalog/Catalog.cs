@@ -21,47 +21,40 @@ namespace UpdateApp
             {
                 var part = moe.Current as Part;
                 if (part == null)
-                {
                     continue;
-                }
 
-                var materialType = string.Empty;
-                part.GetReportProperty("MATERIAL_TYPE", ref materialType);
+                //var materialType = string.Empty;
+                //part.GetReportProperty("MATERIAL_TYPE", ref materialType);
 
-                if (materialType != "STEEL")
-                {
-                    continue;
-                }
+                //if (materialType != "STEEL")
+                //{
+                //    continue;
+                //}
 
-                var name = string.Empty;
-                part.GetReportProperty("NAME", ref name);
+                //var name = string.Empty;
+                //part.GetReportProperty("NAME", ref name);
 
-                name = name.ToUpper();
+                //name = name.ToUpper();
 
-                if (name.Contains("HILTI"))
-                {
-                    continue;
-                }
+                //if (name.Contains("HILTI"))
+                //{
+                //    continue;
+                //}
 
-                if (name.Contains("HALFEN"))
-                {
-                    continue;
-                }
+                //if (name.Contains("HALFEN"))
+                //{
+                //    continue;
+                //}
 
-                if (name.Contains("SHOULDER") && name.Contains("BOLT"))
-                {
-                    continue;
-                }
+                //if (name.Contains("HD") && name.Contains("BOLT"))
+                //{
+                //    continue;
+                //}
 
-                if (name.Contains("HD") && name.Contains("BOLT"))
-                {
-                    continue;
-                }
-
-                if (name.Contains("SHEAR") && name.Contains("STUD"))
-                {
-                    continue;
-                }
+                //if (name.Contains("SHEAR") && name.Contains("STUD"))
+                //{
+                //    continue;
+                //}
 
                 Parts.Add(part);
             }
