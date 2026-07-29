@@ -53,7 +53,9 @@ namespace UpdateApp
 
         private static string GetAssemblyType(Part part)
         {
-            var name = part.Name.ToUpper();
+            var assembly = part.GetAssembly();
+            var mainPart = assembly.GetMainPart() as Part;
+            var name = mainPart.Name.ToUpper();
 
             switch (name)
             {
@@ -76,7 +78,7 @@ namespace UpdateApp
                 case string n when n.Contains("STUDDED") && n.Contains("BEAM"): return "SB";
 
                 // Hollow sections
-                case string n when n.Contains("HOLLOW SECTION"): return "H";
+                case string n when n.Contains("HOLLOW"): return "H";
                 case string n when n.Contains("SHS"): return "H";
                 case string n when n.Contains("RHS"): return "H";
                 case string n when n.Contains("CHS"): return "H";
