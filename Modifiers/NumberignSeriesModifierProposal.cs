@@ -52,51 +52,62 @@ namespace UpdateApp
             ApplyNumberingSeries(part, $"{projectPrefix}{phaseNumber}-{FittingPrefix}-", assemblyPrefix);
         }
 
-        private static string GetAssemblyType(Part mainPart)
+        private static string GetAssemblyType(Part part)
         {
-            var name = mainPart.Name.ToUpper();
+            var name = part.Name.ToUpper();
+
+            var isTemporary = name.Contains("TEMP") || name.Contains("TEMPORARY");
+
+            var prefix = string.Empty;
 
             switch (name)
             {
                 // Specific names first
-                case string n when n.Contains("LOOSE") && n.Contains("PLATE"): return "LP";
-                case string n when n.Contains("SPLICE") && n.Contains("PLATE"): return "SP";
-                case string n when n.Contains("FINGER") && n.Contains("PACK"): return "FP";
-                case string n when n.Contains("SHOULDER") && n.Contains("BOLT"): return "SB";
-                case string n when n.Contains("GRATING") || n.Contains("GREATING"): return "GR";
-                case string n when n.Contains("SHIM"): return "SH";
-                case string n when n.Contains("HANGER"): return "HG";
+                case string n when n.Contains("LOOSE") && n.Contains("PLATE"): prefix = "LP"; break;
+                case string n when n.Contains("SPLICE") && n.Contains("PLATE"): prefix = "SP"; break;
+                case string n when n.Contains("FINGER") && n.Contains("PACK"): prefix = "FP"; break;
+                case string n when n.Contains("SHOULDER") && n.Contains("BOLT"): prefix = "SB"; break;
+                case string n when n.Contains("GRATING") || n.Contains("GREATING"): prefix = "GR"; break;
+                case string n when n.Contains("SHIM"): prefix = "SH"; break;
+                case string n when n.Contains("HANGER"): prefix = "HG"; break;
 
                 // Assembly families
-                case string n when n.Contains("STAIR"): return "ST";
-                case string n when n.Contains("FRAME"): return "FR";
+                case string n when n.Contains("STAIR"): prefix = "ST"; break;
+                case string n when n.Contains("FRAME"): prefix = "FR"; break;
 
                 // Company specific members
-                case string n when n.Contains("FABRICATED") && n.Contains("BEAM"): return "FB";
-                case string n when n.Contains("CELLULAR") && n.Contains("BEAM"): return "CB";
-                case string n when n.Contains("STUDDED") && n.Contains("BEAM"): return "SB";
+                case string n when n.Contains("FABRICATED") && n.Contains("BEAM"): prefix = "FB"; break;
+                case string n when n.Contains("CELLULAR") && n.Contains("BEAM"): prefix = "CB"; break;
+                case string n when n.Contains("STUDDED") && n.Contains("BEAM"): prefix = "SB"; break;
 
                 // Hollow sections
-                case string n when n.Contains("HOLLOW"): return "H";
-                case string n when n.Contains("SHS"): return "H";
-                case string n when n.Contains("RHS"): return "H";
-                case string n when n.Contains("CHS"): return "H";
+                case string n when n.Contains("HOLLOW"): prefix = "H"; break;
+                case string n when n.Contains("SHS"): prefix = "H"; break;
+                case string n when n.Contains("RHS"): prefix = "H"; break;
+                case string n when n.Contains("CHS"): prefix = "H"; break;
 
                 // General structural types
-                case string n when n.Contains("COLUMN"): return "C";
-                case string n when n.Contains("POST"): return "N";
-                case string n when n.Contains("TRIMMER"): return "J";
-                case string n when n.Contains("BEAM"): return "B";
-                case string n when n.Contains("BRACE"): return "X";
-                case string n when n.Contains("TRUSS"): return "TR";
-                case string n when n.Contains("RAFTER"): return "R";
-                case string n when n.Contains("GIRDER"): return "G";
-                case string n when n.Contains("CHANNEL"): return "U";
-                case string n when n.Contains("ANGLE"): return "E";
-                case string n when n.Contains("BRACKET"): return "A";
+                case string n when n.Contains("COLUMN"): prefix = "C"; break;
+                case string n when n.Contains("POST"): prefix = "N"; break;
+                case string n when n.Contains("TRIMMER"): prefix = "J"; break;
+                case string n when n.Contains("BEAM"): prefix = "B"; break;
+                case string n when n.Contains("BRACE"): prefix = "X"; break;
+                case string n when n.Contains("TRUSS"): prefix = "TR"; break;
+                case string n when n.Contains("RAFTER"): prefix = "R"; break;
+                case string n when n.Contains("GIRDER"): prefix = "G"; break;
+                case string n when n.Contains("CHANNEL"): prefix = "U"; break;
+                case string n when n.Contains("ANGLE"): prefix = "E"; break;
+                case string n when n.Contains("BRACKET"): prefix = "A"; break;
 
-                default: return "Z";
+                default: prefix = "Z"; break;
             }
+
+            if (isTemporary)
+            {
+                prefix = $"T{prefix}";
+            }
+
+            return prefix;
         }
 
         private static void ApplyNumberingSeries(Part part, string partPrefix, string assemblyPrefix)
