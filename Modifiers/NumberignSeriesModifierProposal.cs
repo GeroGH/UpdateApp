@@ -54,7 +54,9 @@ namespace UpdateApp
 
         private static string GetAssemblyType(Part part)
         {
-            var name = mainPart.Name.ToUpper();
+            var name = part.Name.ToUpper();
+            var isTemporary = name.Contains("TEMP") || name.Contains("TEMPORARY");
+            var prefix = "Z";
 
             switch (name)
             {
@@ -94,8 +96,6 @@ namespace UpdateApp
                 case string n when n.Contains("CHANNEL"): prefix = "U"; break;
                 case string n when n.Contains("ANGLE"): prefix = "E"; break;
                 case string n when n.Contains("BRACKET"): prefix = "A"; break;
-
-                default: prefix = "Z"; break;
             }
 
             if (isTemporary)
