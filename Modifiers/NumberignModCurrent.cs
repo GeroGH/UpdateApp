@@ -2,16 +2,67 @@
 
 namespace UpdateApp
 {
-    class NumberingSeriesModifierProposal
+    class NumberignModCurrent
     {
-        private const string ProfilePrefix = "P";
-        private const string FittingPrefix = "F";
-
-        public static void Modify(Part part, string projectPrefix)
+        internal static void Modify(Part part)
         {
+            part.GetAssembly().GetMainPart().GetPhase(out var mainPartPhase);
+            var phaseComment = mainPartPhase.PhaseComment;
+            var startPos = phaseComment.IndexOf("[");
+            var endPos = phaseComment.IndexOf("]");
 
-            if (part == null)
+            if (startPos == -1 || endPos == -1)
+            {
                 return;
+            }
+
+            var prefix = phaseComment.Substring(startPos + 1, endPos - startPos - 1);
+
+            var profileType = string.Empty;
+            part.GetReportProperty("PROFILE_TYPE", ref profileType);
+
+            var IsProfile = false;
+            var IsPrimaryPart = false;
+            var IsMachined = false;
+
+            if (profileType != "B")
+            {
+                IsProfile = true;
+            }
+
+            if (part.Equals(part.GetAssembly().GetMainPart()))
+            {
+                IsPrimaryPart = true;
+            }
+
+            if (part.Name.ToUpper().Contains("PREP") ||
+                part.Name.ToUpper().Contains("BEARING") ||
+                part.Name.ToUpper().Contains("MACHINED"))
+            {
+                IsMachined = true;
+            }
+
+            if (IsPrimaryPart)
+            {
+                prefix = $"PP{prefix.Remove(0, 1)}";
+            }
+
+            if (!IsPrimaryPart)
+            {
+                if (IsProfile)
+                {
+                    prefix = $"P{prefix.Remove(0, 1)}";
+                }
+            }
+
+            if (IsMachined)
+            {
+                prefix = $"{prefix}#";
+            }
+
+            //var assemblyNumber = mainPartPhase.PhaseNumber * 100 + 1;
+            var assemblyNumber = 1;
+            part.AssemblyNumber.StartNumber = assemblyNumber;
 
             var assembly = part.GetAssembly();
             if (assembly == null)
@@ -21,42 +72,15 @@ namespace UpdateApp
             if (mainPart == null)
                 return;
 
-            mainPart.GetPhase(out var phase);
-            var phaseNumber = phase.PhaseNumber;
-
             var type = GetAssemblyType(mainPart);
 
-            if (string.IsNullOrWhiteSpace(type))
-                return;
-
-            var profileType = string.Empty;
-            part.GetReportProperty("PROFILE_TYPE", ref profileType);
-
-            var isPrimaryPart = part.Equals(mainPart);
-            var isProfile = profileType != "B";
-
-            var assemblyPrefix = $"{projectPrefix}{phaseNumber}-{type}-";
-
-            if (isPrimaryPart)
-            {
-                ApplyNumberingSeries(part, assemblyPrefix, assemblyPrefix);
-                return;
-            }
-
-            if (isProfile)
-            {
-                ApplyNumberingSeries(part, $"{projectPrefix}{phaseNumber}-{ProfilePrefix}-", assemblyPrefix);
-                return;
-            }
-
-            ApplyNumberingSeries(part, $"{projectPrefix}{phaseNumber}-{FittingPrefix}-", assemblyPrefix);
+            part.AssemblyNumber.Prefix = type;
+            part.PartNumber.Prefix = prefix;
         }
-
         private static string GetAssemblyType(Part part)
         {
-            var name = part.Name.ToUpper();
-            var isTemporary = name.Contains("TEMP") || name.Contains("TEMPORARY");
             var prefix = "Z";
+            var name = part.Name.ToUpper();
 
             switch (name)
             {
@@ -98,21 +122,14 @@ namespace UpdateApp
                 case string n when n.Contains("BRACKET"): prefix = "A"; break;
             }
 
+            var isTemporary = name.Contains("TEMP") || name.Contains("TEMPORARY");
+
             if (isTemporary)
             {
                 prefix = $"T{prefix}";
             }
 
             return prefix;
-        }
-
-        private static void ApplyNumberingSeries(Part part, string partPrefix, string assemblyPrefix)
-        {
-            part.PartNumber.Prefix = partPrefix;
-            part.AssemblyNumber.Prefix = assemblyPrefix;
-            part.PartNumber.StartNumber = 1;
-            part.AssemblyNumber.StartNumber = 1;
-            part.Modify();
         }
     }
 }

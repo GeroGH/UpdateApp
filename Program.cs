@@ -2,18 +2,25 @@
 using System.Windows.Forms;
 using Tekla.Structures.Model;
 using Tekla.Structures.Model.Operations;
+using static UpdateApp.NumberingSystemForm;
 
 namespace UpdateApp
 {
     static class Program
     {
-        private const string ProjectPrefix = "U";
-
         [STAThread]
         static void Main()
         {
-            var useProposal = DialogResult.No;
-            useProposal = MessageBox.Show("Would you like to use the proposed numbering convention?", "Numbering Convention", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            NumberingSystem numberingSystem;
+
+            using (var form = new NumberingSystemForm())
+            {
+                if (form.ShowDialog() != DialogResult.OK)
+                    return;
+
+                numberingSystem = form.SelectedSystem;
+            }
 
             var model = new Model();
             Catalog.CollectPartsFromTheModel();
@@ -22,23 +29,33 @@ namespace UpdateApp
             {
                 try
                 {
-                    PhaseModifier.Modify(part);
+                    PhaseMod.Modify(part);
 
-                    if (useProposal == DialogResult.Yes)
+                    if (numberingSystem == NumberingSystem.Current)
                     {
-                        NumberingSeriesModifierProposal.Modify(part, ProjectPrefix);
+                        NumberignModCurrent.Modify(part);
                     }
 
-                    if (useProposal == DialogResult.No)
+                    if (numberingSystem == NumberingSystem.Current1000)
                     {
-                        NumberignSeriesModifier.Modify(part);
+                        NumberignModCurrent1000.Modify(part);
                     }
 
-                    SectionModifier.Modify(part);
+                    if (numberingSystem == NumberingSystem.ProposalA)
+                    {
+                        NumberingModProposalA.Modify(part);
+                    }
+
+                    if (numberingSystem == NumberingSystem.ProposalABC)
+                    {
+                        NumberingModProposalABC.Modify(part);
+                    }
+
+                    SectionMod.Modify(part);
 
                     part.Modify();
 
-                    Operation.DisplayPrompt($"Part prefixes {part.PartNumber.Prefix}, {part.AssemblyNumber.Prefix} updated...");
+                    Operation.DisplayPrompt($"Part prefixes {part.PartNumber.Prefix}{part.PartNumber.StartNumber}, {part.AssemblyNumber.Prefix}{part.AssemblyNumber.StartNumber} updated...");
                 }
                 catch
                 {

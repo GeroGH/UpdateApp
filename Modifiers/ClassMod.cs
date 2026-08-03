@@ -2,7 +2,7 @@
 
 namespace UpdateApp
 {
-    class ClassModifier
+    class ClassMod
     {
         internal static void Modify(Part part)
         {

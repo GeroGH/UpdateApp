@@ -3,7 +3,7 @@ using Tekla.Structures.Model;
 
 namespace UpdateApp
 {
-    class SectionModifier
+    class SectionMod
     {
         internal static void Modify(Part part)
         {

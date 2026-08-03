@@ -59,14 +59,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Catalog\Catalog.cs" />
-    <Compile Include="Modifiers\ClassModifier.cs" />
-    <Compile Include="Modifiers\NumberignSeriesModifierProposal.cs" />
-    <Compile Include="Modifiers\PhaseModifier.cs" />
-    <Compile Include="Modifiers\NumberignSeriesModifier.cs" />
-    <Compile Include="Modifiers\SectionModifier.cs" />
-    <Compile Include="Modifiers\NameModifier.cs" />
+    <Compile Include="Modifiers\ClassMod.cs" />
+    <Compile Include="Modifiers\NumberignModCurrent1000.cs" />
+    <Compile Include="Modifiers\NumberingModProposalA.cs" />
+    <Compile Include="Modifiers\NumberingModProposalABC.cs" />
+    <Compile Include="Modifiers\PhaseMod.cs" />
+    <Compile Include="Modifiers\NumberignModCurrent.cs" />
+    <Compile Include="Modifiers\SectionMod.cs" />
+    <Compile Include="Modifiers\NameMod.cs" />
+    <Compile Include="NumberingSystemForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NumberingSystemForm.Designer.cs">
+      <DependentUpon>NumberingSystemForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="NumberingSystemForm.resx">
+      <DependentUpon>NumberingSystemForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

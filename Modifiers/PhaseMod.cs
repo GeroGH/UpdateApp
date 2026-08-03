@@ -2,7 +2,7 @@
 
 namespace UpdateApp
 {
-    class PhaseModifier
+    class PhaseMod
     {
         internal static void Modify(Part part)
         {

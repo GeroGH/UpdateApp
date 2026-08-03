@@ -2,7 +2,7 @@
 
 namespace UpdateApp
 {
-    internal class NameModifier
+    internal class NameMod
     {
         internal static void Modify(Part part)
         {
