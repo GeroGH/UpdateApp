@@ -60,7 +60,6 @@ namespace UpdateApp
                 prefix = $"{prefix}#";
             }
 
-            //var assemblyNumber = mainPartPhase.PhaseNumber * 100 + 1;
             var assemblyNumber = 1;
             part.AssemblyNumber.StartNumber = assemblyNumber;
 
