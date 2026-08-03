@@ -54,11 +54,7 @@ namespace UpdateApp
 
         private static string GetAssemblyType(Part part)
         {
-            var name = part.Name.ToUpper();
-
-            var isTemporary = name.Contains("TEMP") || name.Contains("TEMPORARY");
-
-            var prefix = string.Empty;
+            var name = mainPart.Name.ToUpper();
 
             switch (name)
             {
